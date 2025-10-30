@@ -46,10 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				System.out.println("JWT 인증 실패 : " + e.getMessage());
 			}
 			
-			// 요청 -> 인증 정보 확인 -> 컨트롤러 전달 or 다음 필터로 전달
-			filterChain.doFilter(request, response);
-			
 		}
+		
+		// 요청 -> 인증 정보 확인 -> 컨트롤러 전달 or 다음 필터로 전달
+		filterChain.doFilter(request, response);
 		
 	}
 	

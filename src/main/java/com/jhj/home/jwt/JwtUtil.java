@@ -11,6 +11,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtUtil {
 	
+//	private final Secre secret;
+	
 	@Value("${jwt.secret}")
 	private String secret; //application.properties 내에 선언 되어 있는 jwt.secret 값 가져와 저장
 	
