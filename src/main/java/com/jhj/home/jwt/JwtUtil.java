@@ -14,7 +14,7 @@ public class JwtUtil {
 	@Value("${jwt.secret}")
 	private String secret; //application.properties 내에 선언 되어 있는 jwt.secret 값 가져와 저장
 	
-	@Value("{jwt.expiration}")
+	@Value("${jwt.expiration}")
 	private Long expiratoin; // 토큰 유효 시간
 	
 	// 토큰 생성
