@@ -20,7 +20,7 @@ import com.jhj.home.repository.UserRepository;
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
-
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -33,40 +33,42 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	//회원 가입
+	//회원가입
 	@PostMapping("/signup")
 	public Map<String, String> signup(@RequestBody Map<String, String> body) {
-		
+		System.out.println("회원가입요청!!");
 		String username = body.get("username");
-		String password = passwordEncoder.encode(body.get("password"));
-		
+		String password = passwordEncoder.encode(body.get("password")); //평문->암호화
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
-		
-		userRepository.save(user);
-		return Map.of("message", "회원가입완료");
+		userRepository.save(user); //회원가입완료
+		return Map.of("message", "회원가입 성공!");
 	}
 	
 	//로그인
 	@PostMapping("/login")
 	public Map<String, String> login(@RequestBody Map<String, String> body) {
 		String username = body.get("username");
-		String password = body.get("password");
-		
+		String password = body.get("password"); //평문->암호화
+		System.out.println("인증시작!");
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		String token = jwtUtil.generateToken(username);
-		
+		System.out.println("인증끝!");
+		String token = jwtUtil.generateToken(username); //토큰 생성
 		return Map.of("token", token);
 	}
 	
-	// 현재 로그인한 사용자 정보
 	@GetMapping("/me")
 	public Map<String, String> me(@RequestHeader("Authorization") String authHeader) {
-		
-		String token = authHeader.replace("Bearer ", ""); // 헤더에서 토큰 정보만 추출
+		System.out.println("로그인 사용자 정보 요청");
+		String token = authHeader.replace("Bearer ", ""); //헤더에서 토큰 정보만 추출 
 		String username = jwtUtil.extractUsername(token);
 		
 		return Map.of("username", username);
 	}
+	
+	
+	
+	
+
 }

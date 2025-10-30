@@ -12,15 +12,16 @@ import com.jhj.home.entity.User;
 import com.jhj.home.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService{
-
+public class UserService implements UserDetailsService  {
+	
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("등록된 사용자 이름 없음"));
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("등록된 사용자 없음"));
 		
 		return new org.springframework.security.core.userdetails.User(
 				user.getUsername(),
@@ -28,6 +29,6 @@ public class UserService implements UserDetailsService{
 				new ArrayList<>()
 				);
 	}
-	
+
 	
 }
